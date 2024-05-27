@@ -6,32 +6,27 @@
 #define SIZE 15
 int cnt = 0;
 
-typedef struct node
-{
+typedef struct node {
     int element;
     struct node *next, *prev;
 } node;
 
 node *table[SIZE];
 
-void push(int element, int index)
-{
+void push(int element, int index) {
     node *newnode = (node *)malloc(sizeof(node));
     if (!newnode)
         return MALLOC_FAIL;
     newnode->element = element;
     newnode->next = NULL;
     newnode->prev = NULL;
-    if (table[index] == NULL)
-    {
+    if (table[index] == NULL) {
         table[index] = newnode;
         return;
     }
     node *current = table[index];
-    while (current != NULL)
-    {
-        if (current->next == NULL)
-        {
+    while (current != NULL) {
+        if (current->next == NULL) {
             newnode->prev = current;
             current->next = newnode;
             return;
@@ -40,19 +35,13 @@ void push(int element, int index)
     }
 }
 
-void pop(int index)
-{
+void pop(int index) {
     node *current = table[index];
-    while (current != NULL)
-    {
-        if (current->next == NULL)
-        {
-            if (current->prev != NULL)
-            {
+    while (current != NULL) {
+        if (current->next == NULL) {
+            if (current->prev != NULL) {
                 current->prev->next = NULL;
-            }
-            else
-            {
+            } else {
                 table[index] = NULL;
             }
             free(current);
@@ -62,14 +51,12 @@ void pop(int index)
     }
 }
 
-void print(int index)
-{
+void print(int index) {
     if (table[index] == NULL)
         return;
     node *current = table[index];
     printf("{");
-    while (current != NULL)
-    {
+    while (current != NULL) {
         if (current->next != NULL)
             printf("%d, ", current->element);
         else
@@ -79,22 +66,15 @@ void print(int index)
     printf("}");
 }
 
-void combination(int n, int m, int element)
-{
-    if (element > n)
-    {
-        if (table[m] == NULL)
-        {
+void combination(int n, int m, int element) {
+    if (element > n) {
+        if (table[m] == NULL) {
             cnt++;
-            for (int i = 0; i < n; i++)
-            {
+            for (int i = 0; i < n; i++) {
                 print(i);
-                if (table[i + 1] != NULL)
-                {
+                if (table[i + 1] != NULL) {
                     printf(",");
-                }
-                else
-                {
+                } else {
                     printf("\n");
                     break;
                 }
@@ -103,20 +83,16 @@ void combination(int n, int m, int element)
         return;
     }
     // PUSH
-    for (int i = 0; i < n; i++)
-    {
-        if (table[i] != NULL)
-        {
+    for (int i = 0; i < n; i++) {
+        if (table[i] != NULL) {
             push(element, i);
             combination(n, m, element + 1);
             pop(i);
         }
     }
     // NEW
-    for (int i = 0; i < n; i++)
-    {
-        if (table[i] == NULL)
-        {
+    for (int i = 0; i < n; i++) {
+        if (table[i] == NULL) {
             push(element, i);
             combination(n, m, element + 1);
             pop(i);
@@ -125,8 +101,7 @@ void combination(int n, int m, int element)
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int n = atoi(argv[1]);
     int m;
     if (argc == 3)
