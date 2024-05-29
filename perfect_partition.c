@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SUCESS 0
+#define SUCCESS 0
 #define MALLOC_FAIL 1
 #define SIZE 15
 int cnt = 0;
